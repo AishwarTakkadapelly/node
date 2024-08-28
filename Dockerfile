@@ -1,13 +1,32 @@
-FROM node:13-alpine
+# Use the official Node.js image as the base image for building the application
+FROM node:18 AS build
 
-WORKDIR /usr/frontend
+# Set the working directory in the container
+WORKDIR /usr/src/app
 
+# Copy only package.json and package-lock.json to leverage Docker cache
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm install --production
+
+# Copy the rest of the application source code
 COPY . .
-RUN rm -rf node_modules/ package-lock.json
-RUN npm install
 
+# Build the application
 RUN npm run build
 
+# Use a lightweight web server to serve the built application
+FROM nginx:alpine
 
-CMD ["sh", "-c", "npm start"]
+# Remove default Nginx content
+RUN rm -rf /usr/share/nginx/html/*
 
+# Copy the build output from the build stage to the Nginx html directory
+COPY --from=build /usr/src/app/build /usr/share/nginx/html
+
+# Expose port 80 to the outside world
+EXPOSE 80
+
+# Start the Nginx server
+CMD ["nginx", "-g", "daemon off;"]
