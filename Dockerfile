@@ -16,7 +16,7 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Use a lightweight web server to serve the built application
+# Use a lightweight web server to serve the built applications
 FROM nginx:alpine
 
 # Remove default Nginx content
