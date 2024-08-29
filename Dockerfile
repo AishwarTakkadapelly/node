@@ -1,7 +1,7 @@
 # Use the official Node.js image as the base image for building the application
 FROM node:18 AS build
 
-# Set the working directory in the container
+# Set the working directory in the containers
 WORKDIR /usr/src/app
 
 # Copy only package.json and package-lock.json to leverage Docker cache
