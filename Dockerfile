@@ -13,7 +13,7 @@ RUN npm install --production
 # Copy the rest of the application source code
 COPY . .
 
-# Build the applications
+# Build the application
 RUN npm run build
 
 # Use a lightweight web server to serve the built applications
