@@ -19,7 +19,7 @@ RUN npm run build
 # Use a lightweight web server to serve the built applications
 FROM nginx:alpine
 
-# Remove default Nginx content
+# Remove default Nginx contents
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy the build output from the build stage to the Nginx html directory
